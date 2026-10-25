@@ -4,6 +4,7 @@ import pytest
 from unittest.mock import patch, Mock
 from application.weather import get_weather, get_days
 import requests
+from application.data_analys import avr_temp
 
 # Denna test testar funktionen som ska kolla att staden finns i vår dictiranry
 @pytest.mark.parametrize("city, expected",[("Stockholm", True ), ("Fakecity", False)])
@@ -44,6 +45,7 @@ def test_get_weather_httperror():
 
         assert data == {"error": "Kunde tyvärr inte hämta väderdata!"}
 
+
 # Testar get_days funktionen mot fast data
 def test_get_days():
     data = {
@@ -63,6 +65,7 @@ def test_get_days():
 def client():
     return app.test_client()
 
+
 # test mot flask index sidan
 def test_index_flask_page(client):
     response = client.get("/")
@@ -80,3 +83,8 @@ def test_city_invalid(client):
 def test_invalid_url(client):
     response = client.get("/randomurlblablabla")
     assert response.status_code == 404
+
+# Test för pandas funktionen
+def test_avg_temp():
+    days = [{"max": 10}, {"max": 12}, {"max": 14}]
+    assert avr_temp(days) == 12
