@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
-from cities import cities, city_exists
-from weather import get_weather, get_days
+from application.cities import cities, city_exists
+from application.weather import get_weather, get_days
 
 app = Flask(__name__, template_folder="templates")
 
