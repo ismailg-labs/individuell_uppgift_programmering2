@@ -3,26 +3,30 @@
 {%block title%}Weather Page{%endblock%}
 
 {%block content%}
-<h1 class="text-center">Väder i {{city}} just nu:</h1>
-<p class="text-center">Temperatur: {{data["current"]["temperature_2m"] }} °C</p>
-<p class="text-center">Vindhastighet: {{ data["current"]["wind_speed_10m"] }} km/h</p>
+{%if error%}
+    <p>{{error}}</p>
+{%else%}
+    <h1 class="text-center">Väder i {{city}} just nu:</h1>
+    <p class="text-center">Temperatur: {{data["current"]["temperature_2m"] }} °C</p>
+    <p class="text-center">Vindhastighet: {{ data["current"]["wind_speed_10m"] }} km/h</p>
 
-<h2 class="text-center">Tredagarsprognos</h2>
-<table class="table table-striped text-center w-75 mx-auto">
-    <tr>
-        <th>Datum</th>
-        <th>Max °C</th>
-        <th>Min °C</th>
-        <th>Nederbörd (mm)</th>
-    </tr>
+    <h2 class="text-center">Tredagarsprognos</h2>
+    <table class="table table-striped text-center w-75 mx-auto">
+        <tr>
+            <th>Datum</th>
+            <th>Max °C</th>
+            <th>Min °C</th>
+            <th>Nederbörd (mm)</th>
+        </tr>
 
-    {% for day in days %}
-    <tr>
-        <td>{{ day["date"] }}</td>
-        <td>{{ day["max"] }}</td>
-        <td>{{ day["min"] }}</td>
-        <td>{{ day["rain"] }}</td>
-    </tr>
-    {% endfor %}
-</table>
+        {% for day in days %}
+        <tr>
+            <td>{{ day["date"] }}</td>
+            <td>{{ day["max"] }}</td>
+            <td>{{ day["min"] }}</td>
+            <td>{{ day["rain"] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{%endif%}
 {%endblock%}

@@ -13,13 +13,22 @@ def weather_page():
     city = request.args.get("city")
 
     if not city_exists(city):
-        return "Staden finns inte!", 404
+        return render_template("404.html"), 404
 
     latitude, longitude = cities[city]
     data = get_weather(latitude, longitude)
+
+    if "error" in data:
+        return render_template("weather.html", error=data["error"])
+
     days = get_days(data)
 
     return render_template("weather.html",city=city, data=data, days=days)
+
+@app.errorhandler(404)
+def error_404(error):
+    return render_template("404.html"), 404
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}404{% endblock %}
+
+{% block content %}
+<div class="alert alert-danger text-center w-50 mx-auto" role="alert">
+404 - Sidan hittades inte! :((((
+</div>
+
+<a href="{{ url_for('index_page') }}" class="btn btn-primary d-block mx-auto w-25">
+    Tillbaka till startsidan
+</a>
+
+{% endblock %}
