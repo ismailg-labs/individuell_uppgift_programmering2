@@ -1,13 +1,16 @@
-from application.cities import city_exists
-from application.app import app
+from unittest.mock import Mock, patch
+
 import pytest
-from unittest.mock import patch, Mock
-from application.weather import get_weather, get_days
 import requests
+
+from application.app import app
+from application.cities import city_exists
 from application.data_analys import avr_temp, create_line_chart
+from application.weather import get_days, get_weather
+
 
 # Denna test testar funktionen som ska kolla att staden finns i vår dictiranry
-@pytest.mark.parametrize("city, expected",[("Stockholm", True ), ("Fakecity", False)])
+@pytest.mark.parametrize("city, expected", [("Stockholm", True), ("Fakecity", False)])
 def test_city_exists(city, expected):
     assert city_exists(city) == expected
 
@@ -26,7 +29,7 @@ def test_get_weather():
         assert data == {"current": {"temperature_2m": 15.0}}
 
 
-# testar vår get_weather fast nör den kastar ett timeout error 
+# testar vår get_weather fast nör den kastar ett timeout error
 def test_get_weather_timeout():
     with patch("application.weather.requests.get") as mock_get:
         mock_get.side_effect = requests.Timeout
@@ -50,15 +53,17 @@ def test_get_weather_httperror():
 def test_get_days():
     data = {
         "daily": {
-            "time": ["2026-10-25"], 
-            "temperature_2m_max": [12], 
-            "temperature_2m_min": [6], 
-            "precipitation_sum": [2]}
+            "time": ["2026-10-25"],
+            "temperature_2m_max": [12],
+            "temperature_2m_min": [6],
+            "precipitation_sum": [2],
+        }
     }
 
     days = get_days(data)
 
     assert days[0]["max"] == 12
+
 
 # skapar en client som vi kan använda i flera tester utan att flask behöver vara igång
 @pytest.fixture
@@ -84,6 +89,7 @@ def test_invalid_url(client):
     response = client.get("/randomurlblablabla")
     assert response.status_code == 404
 
+
 # Test för pandas funktionen
 def test_avg_temp():
     days = [{"max": 10}, {"max": 12}, {"max": 14}]
@@ -92,7 +98,11 @@ def test_avg_temp():
 
 # Test för plotly linjediagram funktionen
 def test_line_diagram():
-    days = [{"date": "2026-10-25", "max": 10}, {"date": "2026-10-26", "max": 12}, {"date": "2026-10-27", "max": 14}]
+    days = [
+        {"date": "2026-10-25", "max": 10},
+        {"date": "2026-10-26", "max": 12},
+        {"date": "2026-10-27", "max": 14},
+    ]
 
     linje = create_line_chart(days)
 

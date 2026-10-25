@@ -1,6 +1,7 @@
 import requests
 
-# Hämtar väder från api där vi via params skcikar med allt vi vill ha info om 
+
+# Hämtar väder från api där vi via params skcikar med allt vi vill ha info om
 # samt enkel felhanttering som kollar så att anropet gick bra
 def get_weather(latitude, longitude):
     url = "https://api.open-meteo.com/v1/forecast"
@@ -11,7 +12,7 @@ def get_weather(latitude, longitude):
         "current": "temperature_2m,wind_speed_10m",
         "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
         "timezone": "auto",
-        "forecast_days": 3
+        "forecast_days": 3,
     }
 
     try:
@@ -36,7 +37,7 @@ def get_days(data):
             "date": daily["time"][i],
             "max": daily["temperature_2m_max"][i],
             "min": daily["temperature_2m_min"][i],
-            "rain": daily["precipitation_sum"][i]
+            "rain": daily["precipitation_sum"][i],
         }
 
         days.append(day)

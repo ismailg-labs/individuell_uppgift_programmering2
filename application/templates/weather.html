@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{%block title%}Weather Page{%endblock%}
+{% block title %}Väderprognos{% endblock %}
 
-{%block content%}
-{%if error%}
-    <p>{{error}}</p>
+{% block content %}
+{% if error %}
+    <p class="alert alert-danger text-center">{{ error }}</p>
 
-{%else%}
-    <h1 class="text-center">Väder i {{city | uppercase}} just nu:</h1>
-    <p class="text-center">Temperatur: {{data["current"]["temperature_2m"] }} °C</p>
+{% else %}
+    <h1 class="text-center">Väder i {{ city | uppercase }} just nu:</h1>
+    <p class="text-center">Temperatur: {{ data["current"]["temperature_2m"] }} °C</p>
     <p class="text-center">Vindhastighet: {{ data["current"]["wind_speed_10m"] }} km/h</p>
 
     <h2 class="text-center">Tredagarsprognos</h2>
@@ -31,7 +31,7 @@
     </table>
 
     <p class="text-center">
-    Genomsnittlig maxtemperatur för de kommande 3 dagar: {{ avrage }} °C
+        Genomsnittlig maxtemperatur för de kommande 3 dagarna: {{ avrage }} °C
     </p>
 
     <h2 class="text-center">Maxtemperatur kommande 3 dagar</h2>
@@ -40,5 +40,5 @@
         {{ linje | safe }}
     </div>
     
-{%endif%}
-{%endblock%}
+{% endif %}
+{% endblock %}

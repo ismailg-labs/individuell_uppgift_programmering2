@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{%block title%}Index Page{%endblock%}
+{% block title %}Startsida{% endblock %}
 
-{%block content%}
+{% block content %}
 <h1 class="text-center">Välj område för prognos nedan</h1>
 
-<form class="text-center" action="/weather" method="GET">
+<form class="text-center" action="{{ url_for('weather_page') }}" method="GET">
     <select name="city" class="form-select w-50 mx-auto">
         <option class="text-center" value="Stockholm">Stockholm</option>
         <option class="text-center" value="Göteborg">Göteborg</option>
@@ -18,4 +18,4 @@
         Visa väder
     </button>
 </form>
-{%endblock%}
+{% endblock %}
