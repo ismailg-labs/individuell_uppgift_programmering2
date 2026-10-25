@@ -4,7 +4,7 @@ import pytest
 from unittest.mock import patch, Mock
 from application.weather import get_weather, get_days
 import requests
-from application.data_analys import avr_temp
+from application.data_analys import avr_temp, create_line_chart
 
 # Denna test testar funktionen som ska kolla att staden finns i vår dictiranry
 @pytest.mark.parametrize("city, expected",[("Stockholm", True ), ("Fakecity", False)])
@@ -88,3 +88,12 @@ def test_invalid_url(client):
 def test_avg_temp():
     days = [{"max": 10}, {"max": 12}, {"max": 14}]
     assert avr_temp(days) == 12
+
+
+# Test för plotly linjediagram funktionen
+def test_line_diagram():
+    days = [{"date": "2026-10-25", "max": 10}, {"date": "2026-10-26", "max": 12}, {"date": "2026-10-27", "max": 14}]
+
+    linje = create_line_chart(days)
+
+    assert "plotly" in linje.lower()

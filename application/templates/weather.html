@@ -5,6 +5,7 @@
 {%block content%}
 {%if error%}
     <p>{{error}}</p>
+
 {%else%}
     <h1 class="text-center">Väder i {{city | uppercase}} just nu:</h1>
     <p class="text-center">Temperatur: {{data["current"]["temperature_2m"] }} °C</p>
@@ -28,8 +29,16 @@
         </tr>
         {% endfor %}
     </table>
+
     <p class="text-center">
     Genomsnittlig maxtemperatur för de kommande 3 dagar: {{ avrage }} °C
     </p>
+
+    <h2 class="text-center">Maxtemperatur kommande 3 dagar</h2>
+
+    <div class="w-75 mx-auto">
+        {{ linje | safe }}
+    </div>
+    
 {%endif%}
 {%endblock%}

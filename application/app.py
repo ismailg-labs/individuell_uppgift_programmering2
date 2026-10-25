@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from application.cities import cities, city_exists
 from application.weather import get_weather, get_days
-from application.data_analys import avr_temp
+from application.data_analys import avr_temp, create_line_chart
 
 app = Flask(__name__, template_folder="templates")
 
@@ -29,20 +29,13 @@ def weather_page():
 
     days = get_days(data)
     avrage = avr_temp(days)
+    linje = create_line_chart(days)
 
-    return render_template("weather.html",city=city, data=data, days=days, avrage=avrage)
+    return render_template("weather.html",city=city, data=data, days=days, avrage=avrage, linje=linje)
 
 @app.errorhandler(404)
 def error_404(error):
     return render_template("404.html"), 404
-
-
-
-
-
-
-
-
 
 
 
