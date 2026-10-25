@@ -25,3 +25,20 @@ def get_weather(latitude, longitude):
     else:
         return data
 
+
+# funktion som förbereder 3 dagars datan för jinja2
+def get_days(data):
+    daily = data["daily"]
+    days = []
+
+    for i in range(len(daily["time"])):
+        day = {
+            "date": daily["time"][i],
+            "max": daily["temperature_2m_max"][i],
+            "min": daily["temperature_2m_min"][i],
+            "rain": daily["precipitation_sum"][i]
+        }
+
+        days.append(day)
+
+    return days

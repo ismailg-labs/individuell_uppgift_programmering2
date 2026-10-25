@@ -1,14 +1,13 @@
 from application.cities import city_exists
-
+import pytest
 from unittest.mock import patch, Mock
-from application.weather import get_weather
-
+from application.weather import get_weather, get_days
 import requests
 
 # Denna test testar funktionen som ska kolla att staden finns i vår dictiranry
-def test_city_exists():
-    assert city_exists("Stockholm") == True
-    assert city_exists("Fakecity") == False
+@pytest.mark.parametrize("city, expected",[("Stockholm", True ), ("Fakecity", False)])
+def test_city_exists(city, expected):
+    assert city_exists(city) == expected
 
 
 # testar get_weather funktionen med mock utan internet
@@ -43,3 +42,17 @@ def test_get_weather_httperror():
         data = get_weather(59.33, 18.07)
 
         assert data == {"error": "Kunde tyvärr inte hämta väderdata!"}
+
+# Testar get_days funktionen mot fast data
+def test_get_days():
+    data = {
+        "daily": {
+            "time": ["2026-10-25"], 
+            "temperature_2m_max": [12], 
+            "temperature_2m_min": [6], 
+            "precipitation_sum": [2]}
+    }
+
+    days = get_days(data)
+
+    assert days[0]["max"] == 12
