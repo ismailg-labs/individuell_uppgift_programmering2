@@ -4,6 +4,11 @@ from weather import get_weather, get_days
 
 app = Flask(__name__, template_folder="templates")
 
+@app.template_filter("uppercase")
+def uppercase(text):
+    return text.upper()
+
+
 @app.route("/")
 def index_page():
     return render_template("index.html", cities=cities)
