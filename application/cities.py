@@ -6,3 +6,10 @@ cities = {
     "Umeå": (63.83, 20.26),
     "Kiruna": (67.86, 20.23)
 }
+
+# Funktion som kollar så att staden finns i vår dictionary
+def city_exists(city):
+    if city in cities:
+        return True
+    
+    return False
