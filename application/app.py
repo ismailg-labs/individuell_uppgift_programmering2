@@ -30,7 +30,11 @@ def weather_page():
     if "error" in data:
         return render_template("weather.html", error=data["error"]), 503
 
-    days = get_days(data)
+    try:
+        days = get_days(data)
+    except ValueError:
+        return render_template("weather.html", error="Kunde inte läsa väderprognosen..."), 503
+    
     avrage = avr_temp(days)
     linje = create_line_chart(days)
 

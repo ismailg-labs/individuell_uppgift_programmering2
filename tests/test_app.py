@@ -117,3 +117,13 @@ def test_weather_api_error(client):
 
         assert response.status_code == 503
         assert "Kunde tyvärr inte hämta väderdata!" in response.get_data(as_text=True)
+
+
+def test_weather_missingg_daily(client):
+    with patch("application.app.get_weather") as mock_weather:
+        mock_weather.return_value = {"current": {"temperature_2m": 15}}
+
+        response = client.get("/weather?city=Stockholm")
+
+        assert response.status_code == 503
+        assert "Kunde inte läsa väderprognosen..." in response.get_data(as_text=True)
