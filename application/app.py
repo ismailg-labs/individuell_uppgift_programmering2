@@ -28,7 +28,7 @@ def weather_page():
     data = get_weather(latitude, longitude)
 
     if "error" in data:
-        return render_template("weather.html", error=data["error"])
+        return render_template("weather.html", error=data["error"]), 503
 
     days = get_days(data)
     avrage = avr_temp(days)
