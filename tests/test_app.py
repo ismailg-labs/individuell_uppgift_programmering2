@@ -107,3 +107,13 @@ def test_line_diagram():
     linje = create_line_chart(days)
 
     assert "plotly" in linje.lower()
+
+
+def test_weather_api_error(client):
+    with patch("application.app.get_weather") as mock_weather:
+        mock_weather.return_value = {"error": "Kunde tyvärr inte hämta väderdata!"}
+
+        response = client.get("/weather?city=Stockholm")
+
+        assert response.status_code == 503
+        assert "Kunde tyvärr inte hämta väderdata!" in response.get_data(as_text=True)
