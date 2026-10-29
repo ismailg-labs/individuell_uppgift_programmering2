@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.express as px
 
 
-# funktionen som returnerar medelväde av kallaste temp för prognosdagarna
+# funktionen som returnerar medelväde av varmaste temp för prognosdagarna
 def avr_temp(days):
     temps = [day["max"] for day in days]
 

@@ -90,7 +90,7 @@ def test_invalid_url(client):
     assert response.status_code == 404
 
 
-# Test för pandas funktionen
+# Test för pandas funktionen med beräkning av medeltemp med olika värden
 @pytest.mark.parametrize("days, expected", [ ( [ {"max": 10}, {"max": 20}, {"max": 30} ], 20 ), ( [ {"max": 5}, {"max": 10}, {"max": 30} ], 15 ) ])
 def test_avg_temp(days, expected):
     assert avr_temp(days) == expected
@@ -109,6 +109,7 @@ def test_line_diagram():
     assert "plotly" in linje.lower()
 
 
+# testar att vädersida visar error och http 503 när anropet misslyckas
 def test_weather_api_error(client):
     with patch("application.app.get_weather") as mock_weather:
         mock_weather.return_value = {"error": "Kunde tyvärr inte hämta väderdata!"}
@@ -119,6 +120,7 @@ def test_weather_api_error(client):
         assert "Kunde tyvärr inte hämta väderdata!" in response.get_data(as_text=True)
 
 
+# testar att vädersidan visar error när datan saknas
 def test_weather_missingg_daily(client):
     with patch("application.app.get_weather") as mock_weather:
         mock_weather.return_value = {"current": {"temperature_2m": 15}}
