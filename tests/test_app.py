@@ -91,9 +91,9 @@ def test_invalid_url(client):
 
 
 # Test för pandas funktionen
-def test_avg_temp():
-    days = [{"max": 10}, {"max": 12}, {"max": 14}]
-    assert avr_temp(days) == 12
+@pytest.mark.parametrize("days, expected", [ ( [ {"max": 10}, {"max": 20}, {"max": 30} ], 20 ), ( [ {"max": 5}, {"max": 10}, {"max": 30} ], 15 ) ])
+def test_avg_temp(days, expected):
+    assert avr_temp(days) == expected
 
 
 # Test för plotly linjediagram funktionen
